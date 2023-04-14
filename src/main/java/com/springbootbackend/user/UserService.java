@@ -19,4 +19,8 @@ public class UserService {
         return this.userRepository.findAll();
     }
 
+    public void registerUser(User user){
+        this.userRepository.save(user);
+    }
+
 }
