@@ -27,7 +27,7 @@ public class TaskObjectives {
             strategy = GenerationType.SEQUENCE,
             generator = "objective_sequence"
     )
-    private Long id;
+    private Long objective_id;
 
     @ManyToOne
     @JoinColumn(name = "task_id")
