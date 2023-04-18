@@ -1,6 +1,7 @@
-package com.springbootbackend.user;
+package com.springbootbackend.Repository;
 
 
+import com.springbootbackend.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

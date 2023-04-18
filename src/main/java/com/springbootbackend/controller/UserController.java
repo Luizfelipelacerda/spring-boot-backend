@@ -1,7 +1,8 @@
-package com.springbootbackend.user;
+package com.springbootbackend.controller;
 
+import com.springbootbackend.Model.User;
+import com.springbootbackend.Service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,5 +20,7 @@ public class UserController {
     public ResponseEntity<List<User>> getUser(){
         return ResponseEntity.ok(this.userService.getUser());
     }
+
+
 
 }

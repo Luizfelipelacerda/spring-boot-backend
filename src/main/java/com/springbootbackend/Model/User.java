@@ -1,5 +1,6 @@
-package com.springbootbackend.user;
+package com.springbootbackend.Model;
 
+import com.springbootbackend.Enum.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

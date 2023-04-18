@@ -1,4 +1,4 @@
-package com.springbootbackend.user;
+package com.springbootbackend.Enum;
 
 public enum Role {
     USER,

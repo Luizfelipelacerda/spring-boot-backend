@@ -1,14 +1,16 @@
 package com.springbootbackend.auth;
 
 import com.springbootbackend.config.JwtService;
-import com.springbootbackend.user.Role;
-import com.springbootbackend.user.User;
-import com.springbootbackend.user.UserRepository;
+import com.springbootbackend.Enum.Role;
+import com.springbootbackend.Model.User;
+import com.springbootbackend.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +30,9 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
+
+        Optional<User> userOptional = repository.findByEmail(request.getEmail());
+        if(userOptional.isPresent()) throw new IllegalStateException("Email ja cadastrado");
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
