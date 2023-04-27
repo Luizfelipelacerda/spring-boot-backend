@@ -1,13 +1,13 @@
 package com.springbootbackend.task;
 
-import com.springbootbackend.user.User;
+import com.springbootbackend.ExceptionHandler.TaskErrorResponse;
+import com.springbootbackend.ExceptionHandler.TaskNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,12 +32,12 @@ public class TaskController {
         if(!tasks.isEmpty()){
             return new ResponseEntity<>(tasks, HttpStatus.OK);
         }else{
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            throw new IllegalStateException("Task not Found - " + user_id );
         }
     }
 
     @PostMapping
-    public ResponseEntity addTask(@RequestBody Task task){
+    public ResponseEntity addTask(@RequestBody TaskDTO task){
         this.taskService.addTask(task);
         return new ResponseEntity<>("Task Created!", HttpStatus.CREATED);
     }
@@ -49,9 +49,29 @@ public class TaskController {
     }
 
     @PutMapping
-    public ResponseEntity<Void> editeTask(@RequestBody Task task){
+    public ResponseEntity<Void> editeTask(@RequestBody TaskDTO task){
         taskService.editeTask(task);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+
+    @ExceptionHandler
+    public ResponseEntity<TaskErrorResponse> handleException(TaskNotFoundException exc){
+        TaskErrorResponse error = new TaskErrorResponse()
+                .builder().status(HttpStatus.NOT_FOUND.value())
+                .timeStamp(System.currentTimeMillis())
+                .message(exc.getMessage())
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<TaskErrorResponse> handleExcepetion(Exception exc){
+        TaskErrorResponse error = new TaskErrorResponse()
+                .builder().status(HttpStatus.BAD_REQUEST.value())
+                .timeStamp(System.currentTimeMillis())
+                .message(exc.getMessage())
+                .build();
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
 }

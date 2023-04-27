@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -18,4 +19,6 @@ public class TaskDTO {
     private Date inicio;
     private Date fim;
     private String objetive;
+
+    private List<TaskObjectivesDTO> listObjetives;
 }
